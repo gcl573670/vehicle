@@ -1,7 +1,6 @@
 "use client";
 
-import { Link } from "@tanstack/react-router";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Database } from "lucide-react";
 
 export function SourceCitation({
   sourceName,
@@ -19,22 +18,20 @@ export function SourceCitation({
 
   return (
     <div className="flex items-center gap-1.5 text-[10px] leading-4 text-muted-foreground">
-      <Source className="size-3.5" />
+      <Database className="size-3.5" />
       {sourceName && (
         <span>
           {sourceName}
           {sourceUrl && (
-            <Link
-              to={{ to: "/tools/source-detail" as const, params: {} }}
-              // Use anchor for external source links instead of router link
-              asChild={false}
+            // Use anchor for external source links instead of router link
+            <a
               href={sourceUrl}
               target="_blank"
               rel="noreferrer noopener"
               className="inline text-primary underline underline-offset-4 hover:text-primary/80"
             >
               source <ExternalLink className="size-3.5 inline ml-0.5" />
-            </Link>
+            </a>
           )}
         </span>
       )}

@@ -87,16 +87,25 @@ export function AutoSpecLayout({ children }: { children: ReactNode }) {
           </div>
 
           <nav className="hidden items-center gap-5 xl:flex" aria-label="Main navigation">
-            {NAVIGATION.map((item) => (
-              <Link
-                key={item.label}
-                to={item.href.startsWith("/") ? (item.href as any) : undefined}
-                className="whitespace-nowrap text-[12px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
-                disable={!item.href.startsWith("/")}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAVIGATION.map((item) =>
+              item.href.startsWith("/") ? (
+                <Link
+                  key={item.label}
+                  to={item.href as "/vehicles"}
+                  className="whitespace-nowrap text-[12px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="whitespace-nowrap text-[12px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {item.label}
+                </a>
+              )
+            )}
           </nav>
 
           <div className="hidden items-center gap-3 xl:flex">

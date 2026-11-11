@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { User, Vehicle, Calendar, Shield, Settings } from "lucide-react";
+import { User, Calendar, Shield, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/account/")({

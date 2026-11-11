@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ChevronRight, ExternalLink, Gauge, Sparkles, Battery, CircleGauge, Wrench, Fuel, ShieldAlert, Search, MapPin, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { decodeVin, getVehicleRecalls, getFuelEconomyVehicle, getEpaFuelPrices } from "@/lib/autospec.functions";
 import { isValidVin, calculateFuelCost, convertTirePressure, slugifyTool } from "@/lib/autospec.model";
 import type { VinDecodedVehicle, RecallRecord } from "@/lib/autospec.model";
@@ -154,9 +154,11 @@ function ToolPage() {
               <h2 className="text-lg font-semibold">{tool.title}</h2>
               <p className="mt-2 text-sm text-muted-foreground">{tool.description}</p>
               <p className="mt-4 text-xs text-muted-foreground/70">Please select a vehicle first to use this tool.</p>
-              <Button mt={6} asChild>
-                <Link to="/">Select your vehicle</Link>
-              </Button>
+              <div className="mt-6">
+                <Button asChild>
+                  <Link to="/">Select your vehicle</Link>
+                </Button>
+              </div>
             </div>
           )}
         </div>

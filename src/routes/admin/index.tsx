@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { Shield, User, Database, List, FileText, AlertTriangle, Settings, Activity } from "lucide-react";
+import { Shield, User, Database, List, FileText, AlertTriangle, Settings, Activity, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";

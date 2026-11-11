@@ -211,13 +211,11 @@ function VehicleDatabasePage() {
                   <td className="py-4 text-sm text-muted-foreground">{vehicle.market}</td>
                   <td className="py-4 text-right">
                     <Link
-                      to={{
-                        to: "/cars/$makeSlug/$modelSlug/$year" as const,
-                        params: {
-                          makeSlug: vehicle.make.toLowerCase().replace(/\s+/g, "-"),
-                          modelSlug: vehicle.model.toLowerCase().replace(/\s+/g, "-"),
-                          year: String(vehicle.year),
-                        },
+                      to="/cars/$makeSlug/$modelSlug/$year"
+                      params={{
+                        makeSlug: vehicle.make.toLowerCase().replace(/\s+/g, "-"),
+                        modelSlug: vehicle.model.toLowerCase().replace(/\s+/g, "-"),
+                        year: String(vehicle.year),
                       }}
                       className="text-sm font-semibold text-primary hover:underline"
                     >
