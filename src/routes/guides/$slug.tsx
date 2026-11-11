@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { useParams } from "@tanstack/react-router";
 import { FileText, Calendar, User as UserIcon, ChevronLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,7 @@ export const Route = createFileRoute("/guides/$slug")({
 });
 
 function GuidePage() {
-  const params = useParams();
+  const params = Route.useParams();
   const slug = params.slug as string;
 
   const [article, setArticle] = useState<any>(null);

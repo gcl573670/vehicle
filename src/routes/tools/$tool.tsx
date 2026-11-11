@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { ChevronRight, ExternalLink, Gauge, Sparkles, Battery, CircleGauge, Wrench, Fuel, ShieldAlert, Search, MapPin, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -101,7 +101,7 @@ export const Route = createFileRoute("/tools/$tool")({
 });
 
 function ToolPage() {
-  const params = useParams();
+  const params = Route.useParams();
   const toolSlug = (params.tool as string) ?? "";
   const tool = TOOLS[toolSlug];
 

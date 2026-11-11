@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { useParams } from "@tanstack/react-router";
 import {
   Gauge, Sparkles, Battery, CircleGauge, Wrench, ShieldAlert, Fuel,
   Link as LinkIcon, ExternalLink, Info, ChevronRight,
@@ -29,7 +28,7 @@ function slugify(s: string) {
 }
 
 function VehiclePage() {
-  const params = useParams();
+  const params = Route.useParams();
   const makeSlug = params.makeSlug as string;
   const modelSlug = params.modelSlug as string;
   const year = params.year as string;

@@ -33,17 +33,22 @@ function VehicleDatabasePage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
-  const [searchParams] = useSearchParams();
+  const searchParams = Route.useSearch() as {
+    year?: string;
+    make?: string;
+    model?: string;
+    market?: string;
+  };
 
   useEffect(() => {
-    const y = searchParams.get("year");
-    const m = searchParams.get("make");
-    const mod = searchParams.get("model");
-    const mk = searchParams.get("market");
-    if (y) setYear(y);
-    if (m) setMake(m);
-    if (mod) setSearch(mod);
-    if (mk) setMarket(mk);
+    const y = searchParams?.year;
+    const m = searchParams?.make;
+    const mod = searchParams?.model;
+    const mk = searchParams?.market;
+    if (y) setYear(String(y));
+    if (m) setMake(String(m));
+    if (mod) setSearch(String(mod));
+    if (mk) setMarket(String(mk));
   }, [searchParams]);
 
   useEffect(() => {

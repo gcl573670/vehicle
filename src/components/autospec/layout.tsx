@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { Link, useLocation, useSearchParams } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import {
   Battery,
