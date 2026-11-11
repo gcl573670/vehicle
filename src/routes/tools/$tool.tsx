@@ -476,7 +476,13 @@ function RecallCheckerTool() {
                 <p className="mt-1 text-sm text-muted-foreground">{r.summary}</p>
                 <div className="mt-2 flex flex-wrap gap-2 text-xs text-muted-foreground">
                   {r.component && <span>{r.component}</span>}
-                  {r.reportDate && <span>· {new Date(r.reportDate).toLocaleDateString()}</span>}
+                  {r.reportDate && (
+                    <span>
+                      · {Number.isNaN(Date.parse(r.reportDate))
+                        ? r.reportDate
+                        : new Date(r.reportDate).toLocaleDateString()}
+                    </span>
+                  )}
                 </div>
                 {r.remedy && (
                   <p className="mt-2 text-sm"><strong>Remedy:</strong> {r.remedy}</p>

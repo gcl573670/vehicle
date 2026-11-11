@@ -15,6 +15,14 @@ const VIN_SOURCE = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValuesExten
 const RECALL_SOURCE = "https://api.nhtsa.gov/recalls/recallsByVehicle";
 const FUEL_ECONOMY_SOURCE = "https://www.fueleconomy.gov/ws/rest";
 
+/** NHTSA reports dates as DD/MM/YYYY; normalize to ISO so `new Date()` parses everywhere. */
+function normalizeNhtsaDate(value: string | null): string | null {
+  if (!value) return value;
+  const dmy = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value.trim());
+  if (dmy) return `${dmy[3]}-${dmy[2]}-${dmy[1]}`;
+  return value;
+}
+
 async function requestJson(url: URL): Promise<unknown> {
   let lastStatus = 0;
   for (let attempt = 0; attempt < 2; attempt += 1) {
@@ -231,7 +239,7 @@ export const getVehicleRecalls = createServerFn({ method: "GET" })
           summary: pickText(result, ["Summary", "summary"]),
           consequence: pickText(result, ["Conequence", "Consequence", "consequence"]),
           remedy: pickText(result, ["Remedy", "remedy"]),
-          reportDate: pickText(result, ["ReportReceivedDate", "reportReceivedDate"]),
+          reportDate: normalizeNhtsaDate(pickText(result, ["ReportReceivedDate", "reportReceivedDate"])),
           sourceUrl: "https://www.nhtsa.gov/recalls",
         };
       });
