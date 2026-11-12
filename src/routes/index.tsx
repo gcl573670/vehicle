@@ -10,13 +10,10 @@ import {
   Clock3,
   Fuel,
   Gauge,
-  MapPin,
-  Menu,
   Search,
   ShieldAlert,
   Sparkles,
   Wrench,
-  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,18 +46,6 @@ const tools = [
   { title: "Fuel cost", caption: "Trip cost calculator", icon: Fuel, slug: "fuel-cost-calculator" },
   { title: "Recall check", caption: "Official safety records", icon: ShieldAlert, slug: "recall-checker" },
   { title: "VIN decode", caption: "Identify your vehicle", icon: Search, slug: "vin-decoder" },
-];
-
-const navigation = [
-  { label: "Find my car", href: "#find-vehicle" },
-  { label: "Vehicle database", href: "/vehicles" },
-  { label: "Specifications", href: "/tools/specifications" },
-  { label: "Maintenance", href: "/tools/maintenance-schedule" },
-  { label: "Parts & fitment", href: "/tools/parts-compatibility" },
-  { label: "Calculators", href: "/tools/fuel-cost-calculator" },
-  { label: "Recalls & safety", href: "/tools/recall-checker" },
-  { label: "EV information", href: "/tools/ev-charging" },
-  { label: "Guides", href: "/guides" },
 ];
 
 function toolPath(slug: string) {
@@ -114,7 +99,6 @@ function AutoSpecHomePage() {
   const [recalls, setRecalls] = useState<RecallRecord[] | null>(null);
   const [recallError, setRecallError] = useState("");
   const [recallBusy, setRecallBusy] = useState(false);
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [optionId, setOptionId] = useState("");
 
   useEffect(() => {
@@ -303,51 +287,6 @@ function AutoSpecHomePage() {
 
   return (
     <main className="min-h-screen bg-background">
-      <header className="border-b border-border/70 bg-background">
-        <div className="autospec-container flex h-[76px] items-center justify-between gap-5">
-          <Link to="/" className="flex shrink-0 items-center gap-2.5" aria-label="AutoSpec home">
-            <span className="grid size-9 place-items-center rounded-md bg-primary text-primary-foreground">
-              <span className="font-display text-sm font-bold">A<span className="text-accent">/</span></span>
-            </span>
-            <span className="font-display text-[20px] font-bold tracking-[0.015em]">AutoSpec</span>
-          </Link>
-          <nav className="hidden items-center gap-5 xl:flex" aria-label="Main navigation">
-            {navigation.map((item) =>
-              item.href.startsWith("/") ? (
-                <Link
-                  key={item.label}
-                  to={item.href as "/vehicles"}
-                  className="whitespace-nowrap text-[12px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {item.label}
-                </Link>
-              ) : (
-                <a key={item.label} href={item.href} className="whitespace-nowrap text-[12px] font-semibold text-muted-foreground transition-colors hover:text-foreground">
-                  {item.label}
-                </a>
-              ),
-            )}
-          </nav>
-          <div className="hidden items-center gap-3 xl:flex">
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground"><MapPin className="size-3.5"/> US data</span>
-            <Button variant="outline" size="sm" asChild>
-              <Link {...toolPath("vin-decoder")}><Search className="size-3.5"/> Decode VIN</Link>
-            </Button>
-          </div>
-          <Button variant="ghost" size="icon" className="xl:hidden" aria-label={mobileNavOpen ? "Close menu" : "Open menu"} onClick={() => setMobileNavOpen((open) => !open)}>
-            {mobileNavOpen ? <X /> : <Menu />}
-          </Button>
-        </div>
-        {mobileNavOpen && (
-          <nav className="autospec-container grid grid-cols-2 gap-x-5 gap-y-3 pb-5 xl:hidden" aria-label="Mobile navigation">
-            {navigation.map((item) => item.href.startsWith("/") ? (
-              <Link key={item.label} to={item.href as "/vehicles"} onClick={() => setMobileNavOpen(false)} className="py-1 text-sm font-semibold text-foreground">{item.label}</Link>
-            ) : (
-              <a key={item.label} href={item.href} onClick={() => setMobileNavOpen(false)} className="py-1 text-sm font-semibold text-foreground">{item.label}</a>
-            ))}
-          </nav>
-        )}
-      </header>
 
       <section className="hero-panel overflow-hidden">
         <div className="autospec-container grid min-h-[478px] items-center gap-7 py-9 lg:grid-cols-[0.94fr_1.06fr] lg:py-12">

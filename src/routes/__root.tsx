@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { AutoSpecLayout } from "@/components/autospec/layout";
 
 function NotFoundComponent() {
   return (
@@ -110,7 +111,7 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <AutoSpecLayout>{children}</AutoSpecLayout>
         <Scripts />
       </body>
     </html>

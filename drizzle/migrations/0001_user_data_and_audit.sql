@@ -14,9 +14,9 @@ GRANT SELECT ON public.user_profiles TO authenticated;
 GRANT ALL ON public.user_profiles TO authenticated;
 GRANT ALL ON public.user_profiles TO service_role;
 ALTER TABLE public.user_profiles ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users can read own profile" ON public.user_profiles FOR SELECT TO authenticated USING (auth.uid()::text = id::text);
-CREATE POLICY "Users can update own profile" ON public.user_profiles FOR UPDATE TO authenticated USING (auth.uid()::text = id::text);
-CREATE POLICY "Users can insert own profile" ON public.user_profiles FOR INSERT TO authenticated WITH CHECK (auth.uid()::text = id::text);
+CREATE POLICY "Users can read own profile" ON public.user_profiles FOR SELECT TO authenticated USING (auth.uid() = id);
+CREATE POLICY "Users can update own profile" ON public.user_profiles FOR UPDATE TO authenticated USING (auth.uid() = id);
+CREATE POLICY "Users can insert own profile" ON public.user_profiles FOR INSERT TO authenticated WITH CHECK (auth.uid() = id);
 
 CREATE TABLE public.saved_vehicles (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -31,8 +31,8 @@ GRANT SELECT ON public.saved_vehicles TO authenticated;
 GRANT ALL ON public.saved_vehicles TO authenticated;
 GRANT ALL ON public.saved_vehicles TO service_role;
 ALTER TABLE public.saved_vehicles ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users can read own saved vehicles" ON public.saved_vehicles FOR SELECT TO authenticated USING (user_id = auth.uid()::text);
-CREATE POLICY "Users can manage own saved vehicles" ON public.saved_vehicles FOR ALL TO authenticated USING (user_id = auth.uid()::text) WITH CHECK (user_id = auth.uid()::text);
+CREATE POLICY "Users can read own saved vehicles" ON public.saved_vehicles FOR SELECT TO authenticated USING (user_id = auth.uid());
+CREATE POLICY "Users can manage own saved vehicles" ON public.saved_vehicles FOR ALL TO authenticated USING (user_id = auth.uid()) WITH CHECK (user_id = auth.uid());
 CREATE INDEX saved_vehicles_user_idx ON public.saved_vehicles (user_id);
 
 CREATE TABLE public.user_maintenance_history (
@@ -50,8 +50,8 @@ GRANT SELECT ON public.user_maintenance_history TO authenticated;
 GRANT ALL ON public.user_maintenance_history TO authenticated;
 GRANT ALL ON public.user_maintenance_history TO service_role;
 ALTER TABLE public.user_maintenance_history ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users can read own maintenance history" ON public.user_maintenance_history FOR SELECT TO authenticated USING (user_id = auth.uid()::text);
-CREATE POLICY "Users can manage own maintenance history" ON public.user_maintenance_history FOR ALL TO authenticated USING (user_id = auth.uid()::text) WITH CHECK (user_id = auth.uid()::text);
+CREATE POLICY "Users can read own maintenance history" ON public.user_maintenance_history FOR SELECT TO authenticated USING (user_id = auth.uid());
+CREATE POLICY "Users can manage own maintenance history" ON public.user_maintenance_history FOR ALL TO authenticated USING (user_id = auth.uid()) WITH CHECK (user_id = auth.uid());
 CREATE INDEX user_maintenance_history_user_vehicle_idx ON public.user_maintenance_history (user_id, vehicle_id);
 
 CREATE TABLE public.saved_comparisons (
@@ -66,8 +66,8 @@ GRANT SELECT ON public.saved_comparisons TO authenticated;
 GRANT ALL ON public.saved_comparisons TO authenticated;
 GRANT ALL ON public.saved_comparisons TO service_role;
 ALTER TABLE public.saved_comparisons ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users can read own comparisons" ON public.saved_comparisons FOR SELECT TO authenticated USING (user_id = auth.uid()::text OR true);
-CREATE POLICY "Users can manage own comparisons" ON public.saved_comparisons FOR ALL TO authenticated USING (user_id = auth.uid()::text) WITH CHECK (user_id = auth.uid()::text);
+CREATE POLICY "Users can read own comparisons" ON public.saved_comparisons FOR SELECT TO authenticated USING (user_id = auth.uid() OR user_id IS NULL);
+CREATE POLICY "Users can manage own comparisons" ON public.saved_comparisons FOR ALL TO authenticated USING (user_id = auth.uid()) WITH CHECK (user_id = auth.uid());
 
 CREATE TABLE public.vehicle_edits (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -119,6 +119,3 @@ GRANT ALL ON public.api_settings TO authenticated;
 GRANT ALL ON public.api_settings TO service_role;
 ALTER TABLE public.api_settings ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Authenticated users can read API settings" ON public.api_settings FOR SELECT TO authenticated USING (true);
-
--- Update vehicles table to add slug uniqueness across markets if needed (already has UNIQUE slug)
--- Update engines to add created_by for audit (optional, skip for now)
