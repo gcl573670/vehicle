@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { createModelYears } from "@/lib/autospec.model";
-import { VehicleSelector } from "./vehicle-selector";
+import { HeaderVehicleSelector } from "./header-vehicle-selector";
 
 const NAVIGATION = [
   { label: "Home", href: "/" },
@@ -82,8 +82,8 @@ export function AutoSpecLayout({ children }: { children: ReactNode }) {
             <span className="font-display text-[20px] font-bold tracking-[0.015em]">AutoSpec</span>
           </Link>
 
-          <div className="hidden lg:flex items-center gap-6">
-            <VehicleSelector compact storageKey="autospec.selected-vehicle" />
+          <div className="hidden lg:flex items-center gap-3">
+            <HeaderVehicleSelector storageKey="autospec.selected-vehicle" />
           </div>
 
           <nav className="hidden items-center gap-5 xl:flex" aria-label="Main navigation">
