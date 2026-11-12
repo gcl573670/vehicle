@@ -26,7 +26,11 @@ function normalizeNhtsaDate(value: string | null): string | null {
 async function requestJson(url: URL): Promise<unknown> {
   let lastStatus = 0;
   for (let attempt = 0; attempt < 2; attempt += 1) {
-    const response = await fetch(url, { signal: AbortSignal.timeout(12_000) });
+    // FuelEconomy.gov ignores `format=json` and serves XML without this header.
+    const response = await fetch(url, {
+      headers: { accept: "application/json" },
+      signal: AbortSignal.timeout(12_000),
+    });
     if (response.ok) return await response.json();
     lastStatus = response.status;
     if (attempt === 0 && (response.status === 429 || response.status >= 500)) {
@@ -59,8 +63,9 @@ function pickText(record: Record<string, unknown>, keys: string[]): string {
 
 function menuItems(payload: unknown): VehicleOption[] {
   const root = asRecord(payload);
-  const menu = asRecord(root["menuItemList"]);
-  const raw = menu["menuItem"];
+  // The live API returns `{ menuItem: [...] }`; older docs showed a
+  // `menuItemList` wrapper, so accept both (and a single bare item).
+  const raw = root["menuItem"] ?? asRecord(root["menuItemList"])["menuItem"];
   const items = Array.isArray(raw) ? raw : raw == null ? [] : [raw];
   return items
     .map((item) => {
