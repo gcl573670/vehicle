@@ -117,3 +117,15 @@ export function slugifyTool(value: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 }
+
+/**
+ * Canonical slug transform for vehicle URL segments (`/cars/:makeSlug/:modelSlug/:year`).
+ * Must stay in sync with the slug written by `scripts/seed.mjs`.
+ */
+export function slugifyVehicleSegment(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}

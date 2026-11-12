@@ -2,6 +2,7 @@
 
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
+import { slugifyVehicleSegment } from "@/lib/autospec.model";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -36,7 +37,7 @@ export function VehicleCard({
 }: VehicleCardProps) {
   const label = `${year} ${make} ${model}${trim ? ` ${trim}` : ""}`;
   const to = slug
-    ? { to: "/cars/$makeSlug/$modelSlug/$year" as const, params: { makeSlug: make.toLowerCase().replace(/\s+/g, "-"), modelSlug: model.toLowerCase().replace(/\s+/g, "-"), year: String(year) } }
+    ? { to: "/cars/$makeSlug/$modelSlug/$year" as const, params: { makeSlug: slugifyVehicleSegment(make), modelSlug: slugifyVehicleSegment(model), year: String(year) } }
     : undefined;
 
   const handleClick = () => {

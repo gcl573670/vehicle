@@ -3,6 +3,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { Search, Filter, ChevronRight } from "lucide-react";
 import { searchVehicles, getVehicleMakes } from "@/lib/autospec.functions";
 import type { VehicleSearchResult, VehicleRecord } from "@/lib/autospec.functions";
+import { slugifyVehicleSegment } from "@/lib/autospec.model";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -213,8 +214,8 @@ function VehicleDatabasePage() {
                     <Link
                       to="/cars/$makeSlug/$modelSlug/$year"
                       params={{
-                        makeSlug: vehicle.make.toLowerCase().replace(/\s+/g, "-"),
-                        modelSlug: vehicle.model.toLowerCase().replace(/\s+/g, "-"),
+                        makeSlug: slugifyVehicleSegment(vehicle.make),
+                        modelSlug: slugifyVehicleSegment(vehicle.model),
                         year: String(vehicle.year),
                       }}
                       className="text-sm font-semibold text-primary hover:underline"
